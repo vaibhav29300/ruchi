@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Autoplay from "embla-carousel-autoplay";
 import { 
   Lock, 
   Unlock, 
@@ -10,13 +11,22 @@ import {
   RefreshCw, 
   ChevronRight,
   AlertCircle,
-  CheckCircle2
+  CheckCircle2,
+  Volume2,
+  VolumeX
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 
 // Import generated assets
@@ -27,6 +37,14 @@ import kissMarkImg from "@assets/generated_images/red_lipstick_kiss_mark_transpa
 // Import user uploaded assets
 import realMemory1Img from "@assets/IMG_5660_1765004494814.jpg";
 import realMemory3Img from "@assets/981d0463-28d5-4a97-b8d8-5791dc2e37fb_1765004494814.jpg";
+
+// Memory Slider Images
+const sliderImages = [
+  realMemory1Img,
+  realMemory3Img,
+  memory2Img,
+  finalHeartImg
+];
 
 type Puzzle = {
   id: number;
@@ -116,8 +134,20 @@ export default function PuzzleFlow() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showFinal, setShowFinal] = useState(false);
   const [kisses, setKisses] = useState<Kiss[]>([]);
+  
+  // Audio Player State
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isMuted, setIsMuted] = useState(false);
+  const [audioProgress, setAudioProgress] = useState(0);
 
   const currentPuzzle = puzzles[currentPuzzleIndex];
+
+  useEffect(() => {
+    if (showFinal && audioRef.current) {
+      audioRef.current.play().catch(e => console.log("Autoplay prevented:", e));
+      setIsPlaying(true);
+    }
+  }, [showFinal]);
 
   const handleUnlock = () => {
     if (input.toLowerCase().trim() === currentPuzzle.answer.toLowerCase()) {
@@ -152,6 +182,10 @@ export default function PuzzleFlow() {
     setInput("");
     setIsPlaying(false);
     setKisses([]);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
   };
 
   const triggerKissExplosion = () => {
@@ -170,16 +204,35 @@ export default function PuzzleFlow() {
     }, 3000);
   };
 
+  const toggleAudio = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
   if (showFinal) {
     return (
       <motion.div 
         initial={{ opacity: 0 }} 
         animate={{ opacity: 1 }} 
-        className="min-h-screen flex flex-col items-center justify-center p-6 text-center relative overflow-hidden"
+        className="min-h-screen flex flex-col items-center p-6 md:p-12 text-center relative overflow-y-auto overflow-x-hidden"
       >
-        <div className="absolute inset-0 bg-black/40 z-0" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent z-0" />
+        <div className="absolute inset-0 bg-black/40 z-0 fixed" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent z-0 fixed" />
         
+        {/* Audio Element (Hidden but functional) */}
+        <audio 
+          ref={audioRef} 
+          loop 
+          src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Satin/Kai_Engel_-_04_-_Sentinel.mp3" 
+          onTimeUpdate={(e) => setAudioProgress((e.currentTarget.currentTime / e.currentTarget.duration) * 100)}
+        />
+
         {/* Kiss Overlay */}
         <AnimatePresence>
           {kisses.map((kiss) => (
@@ -204,7 +257,7 @@ export default function PuzzleFlow() {
         </AnimatePresence>
 
         {/* Animated Background Particles (Simplified) */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 fixed">
           {[...Array(20)].map((_, i) => (
             <motion.div
               key={i}
@@ -228,40 +281,111 @@ export default function PuzzleFlow() {
           ))}
         </div>
 
-        <div className="relative z-10 max-w-md w-full flex flex-col items-center gap-8">
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", duration: 1.5 }}
-            className="relative cursor-pointer"
-            onClick={triggerKissExplosion}
-            whileTap={{ scale: 0.9 }}
-          >
-            <div className="absolute inset-0 bg-primary/30 blur-3xl rounded-full" />
-            <img 
-              src={finalHeartImg} 
-              alt="Heart" 
-              className="w-64 h-64 object-contain relative drop-shadow-[0_0_30px_rgba(255,100,150,0.6)] animate-pulse-slow" 
-            />
-            <div className="absolute bottom-4 right-4 bg-white text-primary text-xs font-bold px-2 py-1 rounded-full shadow-lg animate-bounce">
-              Click Me! 💋
-            </div>
-          </motion.div>
+        <div className="relative z-10 max-w-2xl w-full flex flex-col items-center gap-12 pb-12">
+          
+          {/* Top Section: Heart & Message */}
+          <div className="flex flex-col items-center gap-8 w-full">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", duration: 1.5 }}
+              className="relative cursor-pointer group"
+              onClick={triggerKissExplosion}
+              whileTap={{ scale: 0.9 }}
+            >
+              <div className="absolute inset-0 bg-primary/30 blur-3xl rounded-full group-hover:bg-primary/50 transition-colors duration-500" />
+              <img 
+                src={finalHeartImg} 
+                alt="Heart" 
+                className="w-48 h-48 md:w-64 md:h-64 object-contain relative drop-shadow-[0_0_30px_rgba(255,100,150,0.6)] animate-pulse-slow" 
+              />
+              <div className="absolute bottom-4 right-4 bg-white text-primary text-xs font-bold px-2 py-1 rounded-full shadow-lg animate-bounce">
+                Click Me! 💋
+              </div>
+            </motion.div>
 
-          <div className="space-y-4">
-            <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 px-4 py-1 text-xs tracking-widest uppercase">
-              You Unlocked My Heart
-            </Badge>
-            <h1 className="text-4xl md:text-5xl font-serif text-primary-foreground font-medium leading-tight">
-              I Love You,<br/><span className="text-primary italic">Ruchika</span> 💖
-            </h1>
-            <p className="text-muted-foreground text-lg leading-relaxed max-w-sm mx-auto">
-              You solved every little puzzle, just like you solve my bad days with your smile.
-              Consider this a virtual kiss, a giant hug, and a promise: my heart is already yours.
-            </p>
+            <div className="space-y-4">
+              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 px-4 py-1 text-xs tracking-widest uppercase">
+                You Unlocked My Heart
+              </Badge>
+              <h1 className="text-4xl md:text-6xl font-serif text-primary-foreground font-medium leading-tight">
+                I Love You,<br/><span className="text-primary italic">Ruchika</span> 💖
+              </h1>
+              <p className="text-muted-foreground text-lg leading-relaxed max-w-md mx-auto">
+                You solved every little puzzle, just like you solve my bad days with your smile.
+                Consider this a virtual kiss, a giant hug, and a promise: my heart is already yours.
+              </p>
+            </div>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {/* Memory Slider Section */}
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="w-full max-w-xl space-y-6 bg-white/5 backdrop-blur-sm p-6 rounded-3xl border border-white/10"
+          >
+            <div className="flex items-center justify-between px-2">
+              <h3 className="text-lg font-serif font-medium text-primary-foreground flex items-center gap-2">
+                <Heart className="w-4 h-4 fill-primary text-primary" /> Our Memories
+              </h3>
+              <div className="flex items-center gap-2 bg-black/20 px-3 py-1.5 rounded-full">
+                <button onClick={toggleAudio} className="text-primary hover:text-primary-foreground transition-colors">
+                  {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
+                </button>
+                <div className="w-16 h-1 bg-white/20 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-primary transition-all duration-300" 
+                    style={{ width: `${audioProgress}%` }} 
+                  />
+                </div>
+                <button onClick={() => {
+                  if (audioRef.current) {
+                    audioRef.current.muted = !isMuted;
+                    setIsMuted(!isMuted);
+                  }
+                }} className="text-muted-foreground hover:text-white transition-colors">
+                  {isMuted ? <VolumeX className="w-3 h-3" /> : <Volume2 className="w-3 h-3" />}
+                </button>
+              </div>
+            </div>
+
+            <Carousel 
+              opts={{ align: "start", loop: true }} 
+              plugins={[
+                Autoplay({ delay: 3000, stopOnInteraction: false })
+              ]}
+              className="w-full"
+            >
+              <CarouselContent>
+                {sliderImages.map((img, index) => (
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2 pl-4">
+                    <div className="p-1">
+                      <Card className="border-0 bg-transparent shadow-none">
+                        <CardContent className="flex aspect-[3/4] items-center justify-center p-0 overflow-hidden rounded-xl relative group">
+                          <img 
+                            src={img} 
+                            alt={`Memory ${index + 1}`} 
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2 bg-black/50 border-none text-white hover:bg-primary" />
+              <CarouselNext className="right-2 bg-black/50 border-none text-white hover:bg-primary" />
+            </Carousel>
+            
+            <p className="text-xs text-muted-foreground font-mono uppercase tracking-widest">
+              ♫ Playing: Our Favorite Song (Preview)
+            </p>
+          </motion.div>
+
+          {/* Bottom Actions */}
+          <div className="flex flex-wrap justify-center gap-2">
             <Badge 
               variant="secondary" 
               className="px-3 py-1.5 text-sm bg-secondary/50 backdrop-blur-sm border-secondary-foreground/10 cursor-pointer hover:bg-primary hover:text-white transition-colors"
@@ -276,7 +400,7 @@ export default function PuzzleFlow() {
             ))}
           </div>
 
-          <div className="space-y-6 w-full">
+          <div className="space-y-6 w-full max-w-xs">
             <Button 
               onClick={restart}
               variant="outline" 
@@ -297,6 +421,9 @@ export default function PuzzleFlow() {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col p-4 md:p-8 max-w-6xl mx-auto overflow-hidden relative">
+      {/* Audio Element for Main Game (Optional background ambient) */}
+      {/* <audio ref={audioRef} loop src="..." /> */}
+
       {/* Kiss Overlay for Main Screen too */}
       <AnimatePresence>
         {kisses.map((kiss) => (
