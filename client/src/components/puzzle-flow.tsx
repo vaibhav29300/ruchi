@@ -951,9 +951,9 @@ export default function PuzzleFlow() {
                 transition={{ duration: 0.5 }}
                 className="absolute inset-0"
               >
-                <Card className="h-full w-full border-none shadow-xl bg-white/80 dark:bg-card/50 backdrop-blur-sm overflow-hidden">
-                  <div className="h-2 w-full bg-gradient-to-r from-green-500/40 via-green-500 to-green-500/40" />
-                  <CardContent className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 flex flex-col h-full w-full">
+                <Card className="h-full w-full border-none shadow-xl bg-white/80 dark:bg-card/50 backdrop-blur-sm overflow-hidden flex flex-col">
+                  <div className="h-2 w-full bg-gradient-to-r from-green-500/40 via-green-500 to-green-500/40 flex-shrink-0" />
+                  <CardContent className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 flex flex-col flex-1 overflow-y-auto min-h-0">
                     <div className="space-y-2 flex-shrink-0">
                       <Badge variant="secondary" className="text-xs">
                         Unlocked
@@ -970,7 +970,7 @@ export default function PuzzleFlow() {
                       />
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-3 flex-shrink-0">
                       <p className="text-sm text-muted-foreground leading-relaxed italic">
                         "{currentPuzzle.memory.note}"
                       </p>
@@ -979,7 +979,7 @@ export default function PuzzleFlow() {
                       </p>
                     </div>
 
-                    <div className="pt-4 border-t space-y-3">
+                    <div className="pt-4 border-t space-y-3 flex-shrink-0">
                       <div className="flex items-center gap-2 text-sm">
                         <Music className="w-4 h-4 text-primary" />
                         <h4 className="font-medium text-sm truncate">{currentPuzzle.memory.song}</h4>
@@ -988,7 +988,7 @@ export default function PuzzleFlow() {
 
                     <Button
                       onClick={handleNext}
-                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground flex-shrink-0"
                       size="lg"
                     >
                       {currentPuzzleIndex < puzzles.length - 1 ? (
