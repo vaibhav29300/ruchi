@@ -13,6 +13,7 @@ const normalizedBase = base === "/" ? "" : base.replace(/\/$/, "");
 
 // Custom location hook that properly handles base path
 function useBaseLocation(): [string, (to: string, replace?: boolean) => void] {
+  // Get current location from window
   const getLocation = useCallback(() => {
     let path = window.location.pathname;
     
@@ -27,46 +28,48 @@ function useBaseLocation(): [string, (to: string, replace?: boolean) => void] {
       path = path.slice(normalizedBase.length) || "/";
     }
     
+    // Ensure path starts with /
+    if (!path.startsWith("/")) {
+      path = "/" + path;
+    }
+    
     return path;
   }, []);
   
   const [location, setLocation] = useLocation();
+  const currentLocation = getLocation();
   
-  // Update location when pathname changes (for 404.html redirects)
+  // Sync location if it doesn't match
   useEffect(() => {
-    const currentPath = getLocation();
-    if (currentPath !== location) {
-      setLocation(currentPath);
+    if (currentLocation !== location) {
+      setLocation(currentLocation);
     }
-  }, [getLocation, location, setLocation]);
+  }, [currentLocation, location, setLocation]);
   
   const setBaseLocation = useCallback((to: string, replace?: boolean) => {
-    const fullPath = normalizedBase ? normalizedBase + (to === "/" ? "" : to) : to;
+    // Ensure to starts with /
+    const normalizedTo = to.startsWith("/") ? to : "/" + to;
+    const fullPath = normalizedBase ? normalizedBase + normalizedTo : normalizedTo;
+    
     if (replace) {
       window.history.replaceState(null, "", fullPath);
     } else {
       window.history.pushState(null, "", fullPath);
     }
-    setLocation(to);
+    setLocation(normalizedTo);
   }, [normalizedBase, setLocation]);
-  
-  const currentLocation = getLocation();
   
   return [currentLocation, setBaseLocation];
 }
 
 function Router() {
-  // For now, always render Home to test if the app loads
-  // We'll fix routing after confirming the base setup works
-  return <Home />;
-  
-  // Uncomment below once we confirm the app loads
-  // return (
-  //   <Switch hook={useBaseLocation as BaseLocationHook}>
-  //     <Route path="/" component={Home} />
-  //     <Route component={NotFound} />
-  //   </Switch>
-  // );
+  // Use the custom location hook that handles base path
+  return (
+    <Switch hook={useBaseLocation as BaseLocationHook}>
+      <Route path="/" component={Home} />
+      <Route component={NotFound} />
+    </Switch>
+  );
 }
 
 function App() {
