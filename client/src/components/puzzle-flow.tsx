@@ -741,14 +741,6 @@ export default function PuzzleFlow() {
             </p>
           </motion.div>
 
-          {/* Bottom Actions */}
-          <div className="flex flex-wrap justify-center gap-2">
-            {["Real feelings", "Next: real date?"].map((tag, i) => (
-              <Badge key={i} variant="secondary" className="px-3 py-1.5 text-sm bg-secondary/50 backdrop-blur-sm border-secondary-foreground/10">
-                {tag}
-              </Badge>
-            ))}
-          </div>
 
           <div className="space-y-6 w-full max-w-xs">
             <Button 
