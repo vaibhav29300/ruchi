@@ -919,7 +919,7 @@ export default function PuzzleFlow() {
         </motion.div>
 
         {/* Right Column: The Memory */}
-        <div className="relative min-h-[500px] sm:min-h-[600px] max-h-[80vh]">
+        <div className="relative min-h-[500px] sm:min-h-[600px]">
           <AnimatePresence mode="wait">
             {!isUnlocked ? (
                <motion.div
@@ -951,9 +951,9 @@ export default function PuzzleFlow() {
                 transition={{ duration: 0.5 }}
                 className="absolute inset-0"
               >
-                <Card className="h-full w-full border-none shadow-xl bg-white/80 dark:bg-card/50 backdrop-blur-sm overflow-hidden flex flex-col max-h-full">
+                <Card className="w-full border-none shadow-xl bg-white/80 dark:bg-card/50 backdrop-blur-sm overflow-visible flex flex-col">
                   <div className="h-2 w-full bg-gradient-to-r from-green-500/40 via-green-500 to-green-500/40 flex-shrink-0" />
-                  <CardContent className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 flex flex-col flex-1 overflow-y-auto min-h-0" style={{ maxHeight: "calc(80vh - 2px)" }}>
+                  <CardContent className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 flex flex-col">
                     <div className="space-y-2 flex-shrink-0">
                       <Badge variant="secondary" className="text-xs">
                         Unlocked
