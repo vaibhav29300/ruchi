@@ -954,7 +954,7 @@ export default function PuzzleFlow() {
                 <Card className="h-full border-none shadow-xl bg-white/80 dark:bg-card/50 backdrop-blur-sm overflow-hidden">
                   <div className="h-2 w-full bg-gradient-to-r from-green-500/40 via-green-500 to-green-500/40" />
                   <CardContent className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 flex flex-col h-full">
-                    <div className="space-y-2">
+                    <div className="space-y-2 flex-shrink-0">
                       <Badge variant="secondary" className="text-xs">
                         Unlocked
                       </Badge>
@@ -962,11 +962,12 @@ export default function PuzzleFlow() {
                     </div>
 
                     {/* Memory Image - Make it fully visible */}
-                    <div className="relative overflow-hidden rounded-lg bg-muted w-full flex-shrink-0" style={{ minHeight: "400px", height: "50vh", maxHeight: "600px" }}>
+                    <div className="relative w-full flex-shrink-0 rounded-lg bg-muted overflow-hidden" style={{ width: "100%", minHeight: "450px", height: "55vh", maxHeight: "650px" }}>
                       <img 
                         src={currentPuzzle.memory.image} 
                         alt={currentPuzzle.memory.caption}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-cover"
+                        style={{ minWidth: "100%", minHeight: "100%" }}
                       />
                     </div>
 
