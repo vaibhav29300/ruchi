@@ -57,16 +57,27 @@ import memoryImg10 from "@assets/IMG_1795_1765005300158.JPG";
 // Helper function to ensure base path is applied to image URLs
 function getImageUrl(imgPath: string): string {
   const base = import.meta.env.BASE_URL || "/";
-  // If the path already starts with the base, return as is
-  if (imgPath.startsWith(base)) {
+  
+  // If base is "/", no need to modify
+  if (base === "/") {
+    return imgPath.startsWith("/") ? imgPath : "/" + imgPath;
+  }
+  
+  // Normalize base (ensure it ends with /)
+  const normalizedBase = base.endsWith("/") ? base : base + "/";
+  
+  // If path already includes base, return as is
+  if (imgPath.startsWith(normalizedBase)) {
     return imgPath;
   }
-  // If the path starts with /, it's absolute, so prepend base
+  
+  // If path starts with /, remove it and prepend base
   if (imgPath.startsWith("/")) {
-    return base === "/" ? imgPath : base + imgPath.slice(1);
+    return normalizedBase + imgPath.slice(1);
   }
+  
   // Otherwise, it's relative, prepend base
-  return base === "/" ? "/" + imgPath : base + imgPath;
+  return normalizedBase + imgPath;
 }
 
 // Memory Slider Images
