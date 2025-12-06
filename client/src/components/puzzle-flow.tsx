@@ -962,7 +962,7 @@ export default function PuzzleFlow() {
                     </div>
 
                     {/* Memory Image - Special handling for puzzle 2 with zoom */}
-                    <div className="relative overflow-hidden rounded-lg aspect-[3/4] bg-muted">
+                    <div className="relative overflow-hidden rounded-lg bg-muted flex-shrink-0" style={{ minHeight: "400px", height: "60vh", maxHeight: "600px" }}>
                       {currentPuzzleIndex === 1 ? (
                         // Puzzle 2: Zoomed in to show characters
                         <img 
