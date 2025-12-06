@@ -203,18 +203,6 @@ export default function PuzzleFlow() {
     if (showFinal && audioRef.current) {
       audioRef.current.play().catch(e => console.log("Autoplay prevented:", e));
       setIsPlaying(true);
-      
-      // Stop audio after 60 seconds
-      const stopTimer = setTimeout(() => {
-        if (audioRef.current) {
-          audioRef.current.pause();
-          setIsPlaying(false);
-        }
-      }, 60000); // 60 seconds
-
-      return () => {
-        clearTimeout(stopTimer);
-      };
     }
   }, [showFinal]);
 
@@ -284,14 +272,9 @@ export default function PuzzleFlow() {
           onTimeUpdate={(e) => {
             const currentTime = e.currentTarget.currentTime;
             const duration = e.currentTarget.duration;
-            // Cap progress at 60 seconds
-            const maxTime = Math.min(60, duration || 60);
-            setAudioProgress((currentTime / maxTime) * 100);
-            
-            // Auto-stop at 60 seconds
-            if (currentTime >= 60) {
-              e.currentTarget.pause();
-              setIsPlaying(false);
+            // Calculate progress based on full duration
+            if (duration) {
+              setAudioProgress((currentTime / duration) * 100);
             }
           }}
           onEnded={() => setIsPlaying(false)}
@@ -737,7 +720,7 @@ export default function PuzzleFlow() {
             </Carousel>
             
             <p className="text-xs text-white/80 font-mono uppercase tracking-widest" style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.7)" }}>
-              ♫ Playing: Our Final Song (60 seconds)
+              ♫ Playing: Our Final Song
             </p>
           </motion.div>
 
