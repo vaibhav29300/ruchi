@@ -951,9 +951,9 @@ export default function PuzzleFlow() {
                 transition={{ duration: 0.5 }}
                 className="absolute inset-0"
               >
-                <Card className="h-full border-none shadow-xl bg-white/80 dark:bg-card/50 backdrop-blur-sm overflow-hidden">
+                <Card className="h-full w-full border-none shadow-xl bg-white/80 dark:bg-card/50 backdrop-blur-sm overflow-hidden">
                   <div className="h-2 w-full bg-gradient-to-r from-green-500/40 via-green-500 to-green-500/40" />
-                  <CardContent className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 flex flex-col h-full">
+                  <CardContent className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 flex flex-col h-full w-full">
                     <div className="space-y-2 flex-shrink-0">
                       <Badge variant="secondary" className="text-xs">
                         Unlocked
