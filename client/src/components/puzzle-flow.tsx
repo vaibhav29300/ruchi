@@ -953,34 +953,21 @@ export default function PuzzleFlow() {
               >
                 <Card className="h-full border-none shadow-xl bg-white/80 dark:bg-card/50 backdrop-blur-sm overflow-hidden">
                   <div className="h-2 w-full bg-gradient-to-r from-green-500/40 via-green-500 to-green-500/40" />
-                  <CardContent className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 flex flex-col h-full overflow-y-auto">
-                    <div className="space-y-2 flex-shrink-0">
+                  <CardContent className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 flex flex-col h-full">
+                    <div className="space-y-2">
                       <Badge variant="secondary" className="text-xs">
                         Unlocked
                       </Badge>
                       <h3 className="text-xl font-serif font-medium">{currentPuzzle.memory.title}</h3>
                     </div>
 
-                    {/* Memory Image - Special handling for puzzle 2 with zoom */}
-                    <div className="relative overflow-hidden rounded-lg bg-muted flex-shrink-0" style={{ minHeight: "300px", height: "45vh", maxHeight: "500px" }}>
-                      {currentPuzzleIndex === 1 ? (
-                        // Puzzle 2: Zoomed in to show characters
-                        <img 
-                          src={currentPuzzle.memory.image} 
-                          alt={currentPuzzle.memory.caption}
-                          className="w-full h-full object-cover"
-                          style={{ 
-                            objectPosition: "center 30%",
-                            transform: "scale(1.2) sm:scale(1.3)"
-                          }}
-                        />
-                      ) : (
-                        <img 
-                          src={currentPuzzle.memory.image} 
-                          alt={currentPuzzle.memory.caption}
-                          className="w-full h-full object-cover"
-                        />
-                      )}
+                    {/* Memory Image - Original size, no zoom */}
+                    <div className="relative overflow-hidden rounded-lg aspect-[3/4] bg-muted">
+                      <img 
+                        src={currentPuzzle.memory.image} 
+                        alt={currentPuzzle.memory.caption}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
 
                     <div className="space-y-3 flex-shrink-0">
