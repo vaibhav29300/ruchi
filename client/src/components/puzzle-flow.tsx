@@ -962,7 +962,7 @@ export default function PuzzleFlow() {
                     </div>
 
                     {/* Memory Image - Original size, no zoom */}
-                    <div className="relative overflow-hidden rounded-lg aspect-[3/4] bg-muted">
+                    <div className="relative overflow-hidden rounded-lg bg-muted w-full" style={{ minHeight: "350px", aspectRatio: "3/4" }}>
                       <img 
                         src={currentPuzzle.memory.image} 
                         alt={currentPuzzle.memory.caption}
