@@ -961,12 +961,12 @@ export default function PuzzleFlow() {
                       <h3 className="text-xl font-serif font-medium">{currentPuzzle.memory.title}</h3>
                     </div>
 
-                    {/* Memory Image - Original size, no zoom */}
-                    <div className="relative overflow-hidden rounded-lg bg-muted w-full" style={{ minHeight: "350px", aspectRatio: "3/4" }}>
+                    {/* Memory Image - Make it fully visible */}
+                    <div className="relative overflow-hidden rounded-lg bg-muted w-full flex-shrink-0" style={{ minHeight: "400px", height: "50vh", maxHeight: "600px" }}>
                       <img 
                         src={currentPuzzle.memory.image} 
                         alt={currentPuzzle.memory.caption}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                       />
                     </div>
 
