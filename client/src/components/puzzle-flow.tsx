@@ -970,7 +970,7 @@ export default function PuzzleFlow() {
                       />
                     </div>
 
-                    <div className="space-y-3 flex-shrink-0">
+                    <div className="space-y-3">
                       <p className="text-sm text-muted-foreground leading-relaxed italic">
                         "{currentPuzzle.memory.note}"
                       </p>
@@ -979,7 +979,7 @@ export default function PuzzleFlow() {
                       </p>
                     </div>
 
-                    <div className="pt-4 border-t space-y-3 flex-shrink-0">
+                    <div className="pt-4 border-t space-y-3">
                       <div className="flex items-center gap-2 text-sm">
                         <Music className="w-4 h-4 text-primary" />
                         <h4 className="font-medium text-sm truncate">{currentPuzzle.memory.song}</h4>
@@ -988,7 +988,7 @@ export default function PuzzleFlow() {
 
                     <Button
                       onClick={handleNext}
-                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground flex-shrink-0"
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
                       size="lg"
                     >
                       {currentPuzzleIndex < puzzles.length - 1 ? (
