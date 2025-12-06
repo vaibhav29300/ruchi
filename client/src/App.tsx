@@ -7,8 +7,11 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 
 function Router() {
+  // Get base path from Vite (automatically set for GitHub Pages)
+  const base = import.meta.env.BASE_URL || "/";
+  
   return (
-    <Switch>
+    <Switch base={base}>
       <Route path="/" component={Home} />
       <Route component={NotFound} />
     </Switch>
