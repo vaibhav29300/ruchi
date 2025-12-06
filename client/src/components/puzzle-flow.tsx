@@ -54,18 +54,33 @@ import memoryImg8 from "@assets/IMG_5660_1765005300159.jpg";
 import memoryImg9 from "@assets/IMG_7330.jpg";
 import memoryImg10 from "@assets/IMG_1795_1765005300158.JPG";
 
+// Helper function to ensure base path is applied to image URLs
+function getImageUrl(imgPath: string): string {
+  const base = import.meta.env.BASE_URL || "/";
+  // If the path already starts with the base, return as is
+  if (imgPath.startsWith(base)) {
+    return imgPath;
+  }
+  // If the path starts with /, it's absolute, so prepend base
+  if (imgPath.startsWith("/")) {
+    return base === "/" ? imgPath : base + imgPath.slice(1);
+  }
+  // Otherwise, it's relative, prepend base
+  return base === "/" ? "/" + imgPath : base + imgPath;
+}
+
 // Memory Slider Images
 const sliderImages = [
-  memoryImg1,
-  memoryImg2,
-  memoryImg3,
-  memoryImg4,
-  memoryImg5,
-  memoryImg6,
-  memoryImg7,
-  memoryImg8,
-  memoryImg9,
-  memoryImg10
+  getImageUrl(memoryImg1),
+  getImageUrl(memoryImg2),
+  getImageUrl(memoryImg3),
+  getImageUrl(memoryImg4),
+  getImageUrl(memoryImg5),
+  getImageUrl(memoryImg6),
+  getImageUrl(memoryImg7),
+  getImageUrl(memoryImg8),
+  getImageUrl(memoryImg9),
+  getImageUrl(memoryImg10)
 ];
 
 type Puzzle = {
@@ -100,7 +115,7 @@ const puzzles: Puzzle[] = [
       title: "LOVE NOTE",
       note: "The day I met you, life secretly changed its favorite color to your smile. I didn't know it then, but every ordinary moment after that started to feel a little bit magical.",
       caption: "The start of \"us\". I still get butterflies.",
-      image: realMemory1Img,
+      image: getImageUrl(realMemory1Img),
       song: "Our Beginning",
     },
   },
@@ -117,7 +132,7 @@ const puzzles: Puzzle[] = [
       title: "Our First Meet",
       note: "I pretended to be annoyed, but honestly? Watching you happily munch on my fries is my favorite view. I'd order extra just to see you smile like that.",
       caption: "Our First Meet",
-      image: proposalImage,
+      image: getImageUrl(proposalImage),
       song: "Our First Meet",
     },
   },
@@ -134,7 +149,7 @@ const puzzles: Puzzle[] = [
       title: "Our First Date",
       note: "The day i met you",
       caption: "Our First Date",
-      image: realMemory3Img,
+      image: getImageUrl(realMemory3Img),
       song: "Our First Date",
     },
   },
@@ -366,7 +381,7 @@ export default function PuzzleFlow() {
                 }}
               >
                 <img 
-                  src={featuredMemoryImg} 
+                  src={getImageUrl(featuredMemoryImg)} 
                   alt="Our Special Memory" 
                   className="w-full h-full object-cover"
                   style={{ objectPosition: "center" }}
