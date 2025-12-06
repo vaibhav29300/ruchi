@@ -24,6 +24,7 @@ import memory1Img from "@assets/generated_images/romantic_couple_holding_hands_a
 import memory2Img from "@assets/generated_images/plate_of_french_fries_diner_style.png";
 import memory3Img from "@assets/generated_images/abstract_soulmates_art.png";
 import finalHeartImg from "@assets/generated_images/glowing_heart_with_kiss_mark.png";
+import kissMarkImg from "@assets/generated_images/red_lipstick_kiss_mark_transparent_background.png";
 
 type Puzzle = {
   id: number;
@@ -97,6 +98,14 @@ const puzzles: Puzzle[] = [
   },
 ];
 
+type Kiss = {
+  id: number;
+  x: number;
+  y: number;
+  rotation: number;
+  scale: number;
+};
+
 export default function PuzzleFlow() {
   const [currentPuzzleIndex, setCurrentPuzzleIndex] = useState(0);
   const [input, setInput] = useState("");
@@ -104,6 +113,7 @@ export default function PuzzleFlow() {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showFinal, setShowFinal] = useState(false);
+  const [kisses, setKisses] = useState<Kiss[]>([]);
 
   const currentPuzzle = puzzles[currentPuzzleIndex];
 
@@ -139,6 +149,23 @@ export default function PuzzleFlow() {
     setStatus("idle");
     setInput("");
     setIsPlaying(false);
+    setKisses([]);
+  };
+
+  const triggerKissExplosion = () => {
+    const newKisses: Kiss[] = Array.from({ length: 20 }).map((_, i) => ({
+      id: Date.now() + i,
+      x: Math.random() * 100, // percentage
+      y: Math.random() * 100, // percentage
+      rotation: Math.random() * 60 - 30,
+      scale: Math.random() * 0.5 + 0.5,
+    }));
+    setKisses((prev) => [...prev, ...newKisses]);
+
+    // Cleanup kisses after animation
+    setTimeout(() => {
+      setKisses((prev) => prev.filter(k => !newKisses.find(nk => nk.id === k.id)));
+    }, 3000);
   };
 
   if (showFinal) {
@@ -151,6 +178,29 @@ export default function PuzzleFlow() {
         <div className="absolute inset-0 bg-black/40 z-0" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent z-0" />
         
+        {/* Kiss Overlay */}
+        <AnimatePresence>
+          {kisses.map((kiss) => (
+            <motion.img
+              key={kiss.id}
+              src={kissMarkImg}
+              initial={{ opacity: 0, scale: 0, x: "-50%", y: "-50%" }}
+              animate={{ 
+                opacity: [0, 1, 1, 0], 
+                scale: [0.5, kiss.scale, kiss.scale * 1.1, kiss.scale * 1.2] 
+              }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 2, ease: "easeOut" }}
+              className="absolute pointer-events-none z-50 w-24 h-24 object-contain"
+              style={{ 
+                left: `${kiss.x}%`, 
+                top: `${kiss.y}%`, 
+                rotate: kiss.rotation 
+              }}
+            />
+          ))}
+        </AnimatePresence>
+
         {/* Animated Background Particles (Simplified) */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           {[...Array(20)].map((_, i) => (
@@ -181,7 +231,9 @@ export default function PuzzleFlow() {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", duration: 1.5 }}
-            className="relative"
+            className="relative cursor-pointer"
+            onClick={triggerKissExplosion}
+            whileTap={{ scale: 0.9 }}
           >
             <div className="absolute inset-0 bg-primary/30 blur-3xl rounded-full" />
             <img 
@@ -189,6 +241,9 @@ export default function PuzzleFlow() {
               alt="Heart" 
               className="w-64 h-64 object-contain relative drop-shadow-[0_0_30px_rgba(255,100,150,0.6)] animate-pulse-slow" 
             />
+            <div className="absolute bottom-4 right-4 bg-white text-primary text-xs font-bold px-2 py-1 rounded-full shadow-lg animate-bounce">
+              Click Me! 💋
+            </div>
           </motion.div>
 
           <div className="space-y-4">
@@ -205,7 +260,14 @@ export default function PuzzleFlow() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-2 mb-8">
-            {["Virtual kiss 💋", "Real feelings 💗", "Next: real date? 🍽️"].map((tag, i) => (
+            <Badge 
+              variant="secondary" 
+              className="px-3 py-1.5 text-sm bg-secondary/50 backdrop-blur-sm border-secondary-foreground/10 cursor-pointer hover:bg-primary hover:text-white transition-colors"
+              onClick={triggerKissExplosion}
+            >
+              Send Virtual Kiss 💋
+            </Badge>
+            {["Real feelings 💗", "Next: real date? 🍽️"].map((tag, i) => (
               <Badge key={i} variant="secondary" className="px-3 py-1.5 text-sm bg-secondary/50 backdrop-blur-sm border-secondary-foreground/10">
                 {tag}
               </Badge>
@@ -232,7 +294,30 @@ export default function PuzzleFlow() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col p-4 md:p-8 max-w-6xl mx-auto">
+    <div className="min-h-screen bg-background text-foreground flex flex-col p-4 md:p-8 max-w-6xl mx-auto overflow-hidden relative">
+      {/* Kiss Overlay for Main Screen too */}
+      <AnimatePresence>
+        {kisses.map((kiss) => (
+          <motion.img
+            key={kiss.id}
+            src={kissMarkImg}
+            initial={{ opacity: 0, scale: 0, x: "-50%", y: "-50%" }}
+            animate={{ 
+              opacity: [0, 1, 1, 0], 
+              scale: [0.5, kiss.scale, kiss.scale * 1.1, kiss.scale * 1.2] 
+            }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 2, ease: "easeOut" }}
+            className="absolute pointer-events-none z-50 w-24 h-24 object-contain"
+            style={{ 
+              left: `${kiss.x}%`, 
+              top: `${kiss.y}%`, 
+              rotate: kiss.rotation 
+            }}
+          />
+        ))}
+      </AnimatePresence>
+
       {/* Header */}
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 md:mb-12">
         <div>
@@ -483,6 +568,19 @@ export default function PuzzleFlow() {
           </AnimatePresence>
         </div>
       </div>
+
+      {/* Floating Action Button for Random Kisses during gameplay */}
+      {!showFinal && (
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={triggerKissExplosion}
+          className="fixed bottom-8 right-8 z-50 bg-white dark:bg-card shadow-2xl rounded-full p-4 text-primary border border-primary/20 hover:bg-primary hover:text-white transition-colors"
+        >
+          <Heart className="w-6 h-6 fill-current" />
+          <span className="sr-only">Send Kiss</span>
+        </motion.button>
+      )}
     </div>
   );
 }
