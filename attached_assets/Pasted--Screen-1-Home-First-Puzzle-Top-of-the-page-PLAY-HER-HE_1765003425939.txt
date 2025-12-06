@@ -1,0 +1,115 @@
+📱 Screen 1 – Home + First Puzzle
+
+Top of the page:
+
+[PLAY HER HEART ● online]
+🎧 Little Love Puzzles
+Every puzzle you solve unlocks a memory, a song, and one more piece of my heart.
+
+On the right:
+
+Puzzle 1 of 3 ▓▓░░ (progress pill slowly filled)
+
+🔐 Left card – Puzzle
+
+PUZZLE
+Type: Memory Riddle • Level 1
+“Our story has many days, but do you remember the exact month we first met?”
+Hint: Think of the month when your life got a little softer.
+
+Input box:
+
+YOUR ANSWER
+[ january ] [ Unlock 🔓 ]
+“Type here, genius…”
+
+If she types wrong:
+
+⚠️ Close, but not quite. Try what we actually say / do, not the formal version 😉
+
+If she types “january” and clicks Unlock:
+
+✅ Perfect. You really do pay attention. 💚
+
+💞 Right card – Unlocked Memory
+
+Before solving, it says:
+
+LOCKED
+Solve the puzzle on the left, and I’ll show you a memory, a song, and a little piece of my heart that belongs only to you. 💫
+
+After solving, it changes to:
+
+🟢 Unlocked with your answer
+
+LOVE NOTE
+
+“The day I met you, life secretly changed its favorite color to your smile.
+I didn't know it then, but every ordinary moment after that started to feel a little bit magical.”
+
+Photo frame:
+
+A cute photo of you two (memory1.jpg), with a caption:
+
+📸 The start of “us”. I still get butterflies.
+
+Song card:
+
+Our Beginning
+Close your eyes and think of us.
+[ ▷ |────────────── ] (audio player)
+
+Below:
+
+[ ⟳ Replay song ] [ ❤️ Next puzzle ]
+
+📱 Screen 2 – Second Puzzle (same layout)
+
+Left side puzzle text changes to something like:
+
+“What is the food you always steal from my plate, even when you said you're ‘not hungry’?”
+Hint: *You always say: ‘just one bite’. It’s never one bite._
+
+Answer: fries → Unlock → new love note, new photo, new song.
+
+📱 Screen 3 – Final Puzzle
+
+Heart Question – Final • Heart Unlock 💝
+“If you had to describe what we are in one single word (the one we always use), what would it be?”
+Hint: *Your favorite word for us. Not “couple”. The cute one._
+
+Answer: soulmates → unlock last memory & song.
+
+Click Next puzzle → now it’s done → final screen.
+
+💋 Final Screen – Virtual Kiss / “I Love You” Page
+
+Full-screen overlay, dark romantic background, glowing heart in center pulsing:
+
+Big round heart with 💋 in the middle, glowing pink/red.
+
+Under it:
+
+[ YOU UNLOCKED MY HEART ● ]
+I Love You, Ruchika 💖
+You solved every little puzzle, just like you solve my bad days with your smile.
+Consider this a virtual kiss, a giant hug, and a promise:
+my heart is already yours.
+
+Button:
+
+[ 💌 Play again ]
+
+Small text at bottom:
+
+Forever your overdramatic coder, Vaibhav. 🫶
+
+Chips below:
+
+Virtual kiss 💋 · Real feelings 💗 · Next: real date? 🍽️
+
+If you want, I can now:
+
+Fill the questions, answers, messages, and captions with your real story
+
+OR make a special 3-puzzle flow only about your best memories with her
