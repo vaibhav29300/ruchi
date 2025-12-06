@@ -32,31 +32,40 @@ import { cn } from "@/lib/utils";
 // Import generated assets
 import memory2Img from "@assets/generated_images/plate_of_french_fries_diner_style.png";
 import finalHeartImg from "@assets/generated_images/glowing_heart_with_kiss_mark.png";
-import kissMarkImg from "@assets/generated_images/red_lipstick_kiss_mark_transparent_background.png";
+import coupleImage from "@assets/generated_images/romantic_couple_holding_hands_at_sunset.png";
 
 // Import user uploaded assets
-import realMemory1Img from "@assets/IMG_5660_1765004494814.jpg";
-import realMemory3Img from "@assets/981d0463-28d5-4a97-b8d8-5791dc2e37fb_1765004494814.jpg";
+import realMemory1Img from "@assets/IMG_5660_1765005300159.jpg";
+import realMemory3Img from "@assets/IMG_1208_1765005089160.jpg";
+import proposalImage from "@assets/IMG_1114.jpg";
+import finalSong from "@assets/final_song.mp3";
+import backgroundSong from "@assets/Le Aaunga.mp3";
 
-// Slider Images
-import slider1 from "@assets/1b81ce20-6a91-4c30-b367-3d211e56bc2c_1765005300157.JPG";
-import slider2 from "@assets/981d0463-28d5-4a97-b8d8-5791dc2e37fb_1765005300158.jpg";
-import slider3 from "@assets/IMG_1503_1765005300158.JPG";
-import slider4 from "@assets/IMG_1505_1765005300158.JPG";
-import slider5 from "@assets/IMG_1795_1765005300158.JPG";
-import slider6 from "@assets/IMG_4881_1765005300158.jpg";
-import slider7 from "@assets/IMG_5660_1765005300159.jpg";
+// Memory Slider Images
+import featuredMemoryImg from "@assets/IMG_1208_1765005089160.jpg";
+import memoryImg1 from "@assets/IMG_1114.jpg";
+import memoryImg2 from "@assets/IMG_1157.jpg";
+import memoryImg3 from "@assets/IMG_1503_1765005300158.JPG";
+import memoryImg4 from "@assets/IMG_1505_1765005300158.JPG";
+import memoryImg5 from "@assets/IMG_2593.jpg";
+import memoryImg6 from "@assets/IMG_3234.jpg";
+import memoryImg7 from "@assets/IMG_4881_1765005300158.jpg";
+import memoryImg8 from "@assets/IMG_5660_1765005300159.jpg";
+import memoryImg9 from "@assets/IMG_7330.jpg";
+import memoryImg10 from "@assets/IMG_1795_1765005300158.JPG";
 
 // Memory Slider Images
 const sliderImages = [
-  slider1,
-  slider2,
-  slider3,
-  slider4,
-  slider5,
-  slider6,
-  slider7,
-  finalHeartImg
+  memoryImg1,
+  memoryImg2,
+  memoryImg3,
+  memoryImg4,
+  memoryImg5,
+  memoryImg6,
+  memoryImg7,
+  memoryImg8,
+  memoryImg9,
+  memoryImg10
 ];
 
 type Puzzle = {
@@ -84,8 +93,8 @@ const puzzles: Puzzle[] = [
     level: 1,
     question: "Our story has many days, but do you remember the exact month we first met?",
     hint: "Think of the month when your life got a little softer.",
-    answer: "january",
-    successMessage: "Perfect. You really do pay attention. 💚",
+    answer: "april",
+    successMessage: "Perfect. You really do pay attention.",
     errorMessage: "Close, but not quite. Try what we actually say / do, not the formal version 😉",
     memory: {
       title: "LOVE NOTE",
@@ -99,45 +108,37 @@ const puzzles: Puzzle[] = [
     id: 2,
     type: "Habit Riddle",
     level: 2,
-    question: "What is the food you always steal from my plate, even when you said you're 'not hungry'?",
-    hint: "You always say: 'just one bite'. It’s never one bite.",
-    answer: "fries",
-    successMessage: "Haha, I knew you'd admit it! 🍟",
-    errorMessage: "Nope! Think saltier and crispier...",
+    question: "What colour shirt i wore on out first meet?",
+    hint: "No hint, just answer.",
+    answer: "Black",
+    successMessage: "Haha,Good janneman",
+    errorMessage: "Nope!",
     memory: {
-      title: "THE 'JUST ONE BITE' LIE",
-      note: "I pretend to be annoyed, but honestly? Watching you happily munch on my fries is my favorite view. I’d order extra just to see you smile like that.",
-      caption: "Caught in the act. You owe me a dinner date.",
-      image: memory2Img,
-      song: "Salt & Love",
+      title: "Our First Meet",
+      note: "I pretended to be annoyed, but honestly? Watching you happily munch on my fries is my favorite view. I'd order extra just to see you smile like that.",
+      caption: "Our First Meet",
+      image: proposalImage,
+      song: "Our First Meet",
     },
   },
   {
     id: 3,
     type: "Heart Question",
     level: 3,
-    question: "If you had to describe what we are in one single word (the one we always use), what would it be?",
-    hint: "Your favorite word for us. Not 'couple'. The cute one.",
-    answer: "soulmates",
-    successMessage: "Exactly. Forever and always. ✨",
-    errorMessage: "It starts with S... and it means everything.",
+    question: "Where did we go on our first date?",
+    hint: "Temple",
+    answer: "iskon",
+    successMessage: "Good janneman",
+    errorMessage: "Nope!",
     memory: {
-      title: "MORE THAN A WORD",
-      note: "Because 'boyfriend and girlfriend' never felt like enough. You are my person, my peace, and my favorite place to be.",
-      caption: "Two souls, one beautiful story.",
+      title: "Our First Date",
+      note: "The day i met you",
+      caption: "Our First Date",
       image: realMemory3Img,
-      song: "Forever",
+      song: "Our First Date",
     },
   },
 ];
-
-type Kiss = {
-  id: number;
-  x: number;
-  y: number;
-  rotation: number;
-  scale: number;
-};
 
 export default function PuzzleFlow() {
   const [currentPuzzleIndex, setCurrentPuzzleIndex] = useState(0);
@@ -146,19 +147,48 @@ export default function PuzzleFlow() {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showFinal, setShowFinal] = useState(false);
-  const [kisses, setKisses] = useState<Kiss[]>([]);
   
   // Audio Player State
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const backgroundAudioRef = useRef<HTMLAudioElement | null>(null);
   const [isMuted, setIsMuted] = useState(false);
   const [audioProgress, setAudioProgress] = useState(0);
+  const [proposalAccepted, setProposalAccepted] = useState(false);
+  const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 });
 
   const currentPuzzle = puzzles[currentPuzzleIndex];
+
+  // Play background song when component mounts
+  useEffect(() => {
+    if (backgroundAudioRef.current && !showFinal) {
+      backgroundAudioRef.current.play().catch(e => console.log("Background autoplay prevented:", e));
+    }
+  }, []);
+
+  // Stop background song when final page shows
+  useEffect(() => {
+    if (showFinal && backgroundAudioRef.current) {
+      backgroundAudioRef.current.pause();
+      backgroundAudioRef.current.currentTime = 0;
+    }
+  }, [showFinal]);
 
   useEffect(() => {
     if (showFinal && audioRef.current) {
       audioRef.current.play().catch(e => console.log("Autoplay prevented:", e));
       setIsPlaying(true);
+      
+      // Stop audio after 60 seconds
+      const stopTimer = setTimeout(() => {
+        if (audioRef.current) {
+          audioRef.current.pause();
+          setIsPlaying(false);
+        }
+      }, 60000); // 60 seconds
+
+      return () => {
+        clearTimeout(stopTimer);
+      };
     }
   }, [showFinal]);
 
@@ -183,40 +213,6 @@ export default function PuzzleFlow() {
     }
   };
 
-  const handleReplay = () => {
-    setIsPlaying(!isPlaying);
-  };
-
-  const restart = () => {
-    setShowFinal(false);
-    setCurrentPuzzleIndex(0);
-    setIsUnlocked(false);
-    setStatus("idle");
-    setInput("");
-    setIsPlaying(false);
-    setKisses([]);
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
-  };
-
-  const triggerKissExplosion = () => {
-    const newKisses: Kiss[] = Array.from({ length: 20 }).map((_, i) => ({
-      id: Date.now() + i,
-      x: Math.random() * 100, // percentage
-      y: Math.random() * 100, // percentage
-      rotation: Math.random() * 60 - 30,
-      scale: Math.random() * 0.5 + 0.5,
-    }));
-    setKisses((prev) => [...prev, ...newKisses]);
-
-    // Cleanup kisses after animation
-    setTimeout(() => {
-      setKisses((prev) => prev.filter(k => !newKisses.find(nk => nk.id === k.id)));
-    }, 3000);
-  };
-
   const toggleAudio = () => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -228,12 +224,29 @@ export default function PuzzleFlow() {
     }
   };
 
+  const restart = () => {
+    setShowFinal(false);
+    setCurrentPuzzleIndex(0);
+    setIsUnlocked(false);
+    setStatus("idle");
+    setInput("");
+    setIsPlaying(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    // Restart background song
+    if (backgroundAudioRef.current) {
+      backgroundAudioRef.current.play().catch(e => console.log("Background autoplay prevented:", e));
+    }
+  };
+
   if (showFinal) {
     return (
       <motion.div 
         initial={{ opacity: 0 }} 
         animate={{ opacity: 1 }} 
-        className="min-h-screen flex flex-col items-center p-6 md:p-12 text-center relative overflow-y-auto overflow-x-hidden"
+        className="min-h-screen flex flex-col items-center p-4 sm:p-6 md:p-12 text-center relative overflow-y-auto overflow-x-hidden"
       >
         <div className="absolute inset-0 bg-black/40 z-0 fixed" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent z-0 fixed" />
@@ -241,35 +254,24 @@ export default function PuzzleFlow() {
         {/* Audio Element (Hidden but functional) */}
         <audio 
           ref={audioRef} 
-          loop 
-          src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Kai_Engel/Satin/Kai_Engel_-_04_-_Sentinel.mp3" 
-          onTimeUpdate={(e) => setAudioProgress((e.currentTarget.currentTime / e.currentTarget.duration) * 100)}
+          src={finalSong}
+          onTimeUpdate={(e) => {
+            const currentTime = e.currentTarget.currentTime;
+            const duration = e.currentTarget.duration;
+            // Cap progress at 60 seconds
+            const maxTime = Math.min(60, duration || 60);
+            setAudioProgress((currentTime / maxTime) * 100);
+            
+            // Auto-stop at 60 seconds
+            if (currentTime >= 60) {
+              e.currentTarget.pause();
+              setIsPlaying(false);
+            }
+          }}
+          onEnded={() => setIsPlaying(false)}
         />
 
-        {/* Kiss Overlay */}
-        <AnimatePresence>
-          {kisses.map((kiss) => (
-            <motion.img
-              key={kiss.id}
-              src={kissMarkImg}
-              initial={{ opacity: 0, scale: 0, x: "-50%", y: "-50%" }}
-              animate={{ 
-                opacity: [0, 1, 1, 0], 
-                scale: [0.5, kiss.scale, kiss.scale * 1.1, kiss.scale * 1.2] 
-              }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 2, ease: "easeOut" }}
-              className="absolute pointer-events-none z-50 w-24 h-24 object-contain"
-              style={{ 
-                left: `${kiss.x}%`, 
-                top: `${kiss.y}%`, 
-                rotate: kiss.rotation 
-              }}
-            />
-          ))}
-        </AnimatePresence>
-
-        {/* Animated Background Particles (Simplified) */}
+        {/* Animated Background Particles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 fixed">
           {[...Array(20)].map((_, i) => (
             <motion.div
@@ -294,53 +296,369 @@ export default function PuzzleFlow() {
           ))}
         </div>
 
-        <div className="relative z-10 max-w-2xl w-full flex flex-col items-center gap-12 pb-12">
+        <div className="relative z-10 max-w-2xl w-full flex flex-col items-center gap-6 sm:gap-8 md:gap-12 pb-6 sm:pb-12 px-4">
           
-          {/* Top Section: Heart & Message */}
+          {/* Top Section: Featured Image in Heart Shape & Message */}
           <div className="flex flex-col items-center gap-8 w-full">
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: "spring", duration: 1.5 }}
-              className="relative cursor-pointer group"
-              onClick={triggerKissExplosion}
-              whileTap={{ scale: 0.9 }}
+              className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 flex items-center justify-center"
             >
-              <div className="absolute inset-0 bg-primary/30 blur-3xl rounded-full group-hover:bg-primary/50 transition-colors duration-500" />
-              <img 
-                src={finalHeartImg} 
-                alt="Heart" 
-                className="w-48 h-48 md:w-64 md:h-64 object-contain relative drop-shadow-[0_0_30px_rgba(255,100,150,0.6)] animate-pulse-slow" 
-              />
-              <div className="absolute bottom-4 right-4 bg-white text-primary text-xs font-bold px-2 py-1 rounded-full shadow-lg animate-bounce">
-                Click Me! 💋
-              </div>
+              {/* SVG Definitions for Heart Clip Path */}
+              <svg className="absolute w-0 h-0">
+                <defs>
+                  <clipPath id="heartClipPath" clipPathUnits="objectBoundingBox">
+                    <path d="M0.5,0.9 C0.5,0.9 0.1,0.6 0.1,0.4 C0.1,0.25 0.25,0.15 0.5,0.3 C0.75,0.15 0.9,0.25 0.9,0.4 C0.9,0.6 0.5,0.9 0.5,0.9 Z" />
+                  </clipPath>
+                  <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="rgba(255, 100, 150, 0.5)" />
+                    <stop offset="50%" stopColor="rgba(255, 150, 200, 0.7)" />
+                    <stop offset="100%" stopColor="rgba(255, 100, 150, 0.5)" />
+                  </linearGradient>
+                </defs>
+              </svg>
+
+              {/* Animated Heart Background */}
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center z-0"
+                animate={{
+                  scale: [1, 1.15, 1],
+                  rotate: [0, 8, -8, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <svg
+                  viewBox="0 0 200 200"
+                  className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80"
+                  style={{ 
+                    filter: "drop-shadow(0 0 50px rgba(255, 100, 150, 1)) drop-shadow(0 0 100px rgba(255, 150, 200, 0.6))"
+                  }}
+                >
+                  <path
+                    d="M100,180 C100,180 20,120 20,80 C20,50 50,30 100,60 C150,30 180,50 180,80 C180,120 100,180 100,180 Z"
+                    fill="url(#heartGradient)"
+                    stroke="rgba(255, 120, 160, 1)"
+                    strokeWidth="4"
+                  />
+                </svg>
+              </motion.div>
+              
+              {/* Featured Image inside Heart */}
+              <motion.div
+                className="relative w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56 z-10"
+                style={{
+                  clipPath: "url(#heartClipPath)",
+                  WebkitClipPath: "url(#heartClipPath)",
+                }}
+                animate={{
+                  scale: [1, 1.08, 1],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <img 
+                  src={featuredMemoryImg} 
+                  alt="Our Special Memory" 
+                  className="w-full h-full object-cover"
+                  style={{ objectPosition: "center" }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+              </motion.div>
             </motion.div>
 
-            <div className="space-y-4">
-              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 px-4 py-1 text-xs tracking-widest uppercase">
+            <div className="space-y-6 w-full max-w-3xl">
+              <Badge variant="outline" className="bg-pink-100 text-pink-700 border-pink-300 px-4 py-1 text-xs tracking-widest uppercase">
                 You Unlocked My Heart
               </Badge>
-              <h1 className="text-4xl md:text-6xl font-serif text-primary-foreground font-medium leading-tight">
-                I Love You,<br/><span className="text-primary italic">Ruchika</span> 💖
-              </h1>
-              <p className="text-muted-foreground text-lg leading-relaxed max-w-md mx-auto">
-                You solved every little puzzle, just like you solve my bad days with your smile.
-                Consider this a virtual kiss, a giant hug, and a promise: my heart is already yours.
-              </p>
+              <motion.h1 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-handwriting font-bold leading-tight text-center"
+                style={{ 
+                  fontFamily: "'Dancing Script', 'Caveat', cursive",
+                  color: "#7C2D3E",
+                  textShadow: "2px 2px 4px rgba(255,255,255,0.8)"
+                }}
+              >
+                I Love You,<br/><span className="text-pink-600 italic">Ruchu</span>
+              </motion.h1>
+              
+              {/* Romantic Story Writeup */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+                className="bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-6 md:p-8 border border-pink-200/50 shadow-xl"
+              >
+                <p 
+                  className="text-base md:text-lg leading-relaxed font-handwriting text-center"
+                  style={{ 
+                    fontFamily: "'Dancing Script', 'Caveat', cursive",
+                    fontSize: "clamp(1.1rem, 4vw, 1.5rem)",
+                    lineHeight: "1.8",
+                    color: "#7C2D3E",
+                    textShadow: "none"
+                  }}
+                >
+                  It all began at the temple, where our paths first crossed. That day, something shifted in the universe, and I didn't know it then, but my life was about to change forever.
+                </p>
+                <p 
+                  className="text-base md:text-lg leading-relaxed font-handwriting text-center mt-4"
+                  style={{ 
+                    fontFamily: "'Dancing Script', 'Caveat', cursive",
+                    fontSize: "clamp(1.1rem, 4vw, 1.5rem)",
+                    lineHeight: "1.8",
+                    color: "#7C2D3E",
+                    textShadow: "none"
+                  }}
+                >
+                  Our first dinner date was magical. I remember watching you smile, and thinking how lucky I was to be sitting across from you. Little did I know, this was just the beginning of our beautiful story.
+                </p>
+                <p 
+                  className="text-base md:text-lg leading-relaxed font-handwriting text-center mt-4"
+                  style={{ 
+                    fontFamily: "'Dancing Script', 'Caveat', cursive",
+                    fontSize: "clamp(1.1rem, 4vw, 1.5rem)",
+                    lineHeight: "1.8",
+                    color: "#8B3A4D",
+                    textShadow: "none"
+                  }}
+                >
+                  Every day, dropping you from office to Electronic City became my favorite part of the day. Those drives weren't just about the destination—they were about the conversations, the laughter, the way you'd look at me, and how time seemed to stand still when we were together.
+                </p>
+                <p 
+                  className="text-base md:text-lg leading-relaxed font-handwriting text-center mt-4"
+                  style={{ 
+                    fontFamily: "'Dancing Script', 'Caveat', cursive",
+                    fontSize: "clamp(1.1rem, 4vw, 1.5rem)",
+                    lineHeight: "1.8",
+                    color: "#8B3A4D",
+                    textShadow: "none"
+                  }}
+                >
+                  The drinks at Omu Bhaiya's house, those nightouts that turned into early mornings, the late-night walks where we'd talk about everything and nothing—each moment felt like a page from a love story I never knew I was writing.
+                </p>
+                <p 
+                  className="text-base md:text-lg leading-relaxed font-handwriting text-center mt-4"
+                  style={{ 
+                    fontFamily: "'Dancing Script', 'Caveat', cursive",
+                    fontSize: "clamp(1.1rem, 4vw, 1.5rem)",
+                    lineHeight: "1.8",
+                    color: "#8B3A4D",
+                    textShadow: "none"
+                  }}
+                >
+                  Those midnight dosa runs, the theatre proposals that made my heart race, every small memory we've created together—they're not just moments, they're the building blocks of us. You solved every little puzzle, just like you solve my bad days with your smile.
+                </p>
+                <p 
+                  className="text-base md:text-lg leading-relaxed font-handwriting text-center mt-4 font-bold"
+                  style={{ 
+                    fontFamily: "'Dancing Script', 'Caveat', cursive",
+                    fontSize: "clamp(1.3rem, 5vw, 1.8rem)",
+                    lineHeight: "1.8",
+                    color: "#9B1A3A",
+                    textShadow: "none"
+                  }}
+                >
+                  Consider this a virtual kiss, a giant hug, and a promise: my heart is already yours.
+                </p>
+              </motion.div>
             </div>
           </div>
+
+          {/* Proposal Image Above Question */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.9, duration: 0.8 }}
+            className="w-full max-w-md px-2"
+          >
+            <div className="relative overflow-hidden rounded-2xl shadow-2xl border-2 border-pink-200/50">
+              <img 
+                src={proposalImage} 
+                alt="Our Proposal Moment" 
+                className="w-full h-full object-cover"
+                style={{ 
+                  objectPosition: "center 30%",
+                  transform: "scale(1.2)"
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+            </div>
+          </motion.div>
+
+          {/* Proposal Section */}
+          {!proposalAccepted && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.1, duration: 0.8 }}
+              className="w-full max-w-2xl space-y-4 sm:space-y-6 bg-white/90 backdrop-blur-md rounded-2xl p-4 sm:p-6 md:p-8 lg:p-10 border border-pink-200/50 shadow-2xl"
+            >
+              <motion.h2
+                initial={{ scale: 0.9 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", duration: 0.6 }}
+                className="text-2xl sm:text-3xl md:text-4xl font-handwriting text-center font-bold"
+                style={{ 
+                  fontFamily: "'Dancing Script', 'Caveat', cursive",
+                  color: "#9B1A3A"
+                }}
+              >
+                Will you marry me?
+              </motion.h2>
+              
+              <div className="flex justify-center items-center gap-3 sm:gap-4 md:gap-6 mt-4 sm:mt-6 md:mt-8 relative w-full min-h-[100px] sm:min-h-[120px] overflow-hidden">
+                {/* Yes Button - Fixed Position */}
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative z-10"
+                >
+                  <Button
+                    onClick={() => setProposalAccepted(true)}
+                    size="lg"
+                    className="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white font-bold text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 rounded-full shadow-lg min-h-[44px] min-w-[80px]"
+                  >
+                    Yes!
+                  </Button>
+                </motion.div>
+
+                {/* No Button - Starts Beside Yes, Runs Away All Over Screen */}
+                <motion.div
+                  className="relative z-10"
+                  style={{
+                    x: noButtonPosition.x,
+                    y: noButtonPosition.y,
+                  }}
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    // Run all over the screen when trying to touch
+                    const screenWidth = window.innerWidth;
+                    const screenHeight = window.innerHeight;
+                    const randomX = (Math.random() - 0.5) * screenWidth * 1.5;
+                    const randomY = (Math.random() - 0.5) * screenHeight * 1.5;
+                    setNoButtonPosition({ x: randomX, y: randomY });
+                    
+                    // Keep running away multiple times
+                    setTimeout(() => {
+                      const randomX2 = (Math.random() - 0.5) * screenWidth * 1.5;
+                      const randomY2 = (Math.random() - 0.5) * screenHeight * 1.5;
+                      setNoButtonPosition({ x: randomX2, y: randomY2 });
+                    }, 200);
+                    
+                    setTimeout(() => {
+                      const randomX3 = (Math.random() - 0.5) * screenWidth * 1.5;
+                      const randomY3 = (Math.random() - 0.5) * screenHeight * 1.5;
+                      setNoButtonPosition({ x: randomX3, y: randomY3 });
+                    }, 400);
+                  }}
+                  onMouseEnter={() => {
+                    // Move away when hovering (desktop)
+                    const randomX = (Math.random() - 0.5) * window.innerWidth * 0.8;
+                    const randomY = (Math.random() - 0.5) * window.innerHeight * 0.8;
+                    setNoButtonPosition({ x: randomX, y: randomY });
+                  }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    // Run all over the screen when trying to click
+                    const screenWidth = window.innerWidth;
+                    const screenHeight = window.innerHeight;
+                    const randomX = (Math.random() - 0.5) * screenWidth * 1.5;
+                    const randomY = (Math.random() - 0.5) * screenHeight * 1.5;
+                    setNoButtonPosition({ x: randomX, y: randomY });
+                    
+                    // Keep running away multiple times
+                    setTimeout(() => {
+                      const randomX2 = (Math.random() - 0.5) * screenWidth * 1.5;
+                      const randomY2 = (Math.random() - 0.5) * screenHeight * 1.5;
+                      setNoButtonPosition({ x: randomX2, y: randomY2 });
+                    }, 200);
+                    
+                    setTimeout(() => {
+                      const randomX3 = (Math.random() - 0.5) * screenWidth * 1.5;
+                      const randomY3 = (Math.random() - 0.5) * screenHeight * 1.5;
+                      setNoButtonPosition({ x: randomX3, y: randomY3 });
+                    }, 400);
+                  }}
+                  animate={{
+                    x: noButtonPosition.x,
+                    y: noButtonPosition.y,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 500,
+                    damping: 30,
+                  }}
+                >
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 rounded-full border-2 border-gray-300 cursor-pointer pointer-events-auto min-h-[44px] min-w-[80px] touch-none"
+                  >
+                    No
+                  </Button>
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Proposal Accepted Message */}
+          {proposalAccepted && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ type: "spring", duration: 0.8 }}
+              className="w-full max-w-2xl space-y-4 bg-gradient-to-r from-pink-100 to-red-100 backdrop-blur-md rounded-2xl p-4 sm:p-6 md:p-8 lg:p-10 border-2 border-pink-300 shadow-2xl"
+            >
+              <motion.h2
+                initial={{ y: -20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-handwriting text-center font-bold"
+                style={{ 
+                  fontFamily: "'Dancing Script', 'Caveat', cursive",
+                  color: "#9B1A3A"
+                }}
+              >
+                You said Yes! Yesss! Yeee! 🎉
+              </motion.h2>
+              <motion.p
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="text-lg sm:text-xl font-handwriting text-center"
+                style={{ 
+                  fontFamily: "'Dancing Script', 'Caveat', cursive",
+                  color: "#7C2D3E"
+                }}
+              >
+                Anyhow option nahi hai jaan! 😂<br/>
+                I can't wait to spend forever with you!
+              </motion.p>
+            </motion.div>
+          )}
 
           {/* Memory Slider Section */}
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="w-full max-w-xl space-y-6 bg-white/5 backdrop-blur-sm p-6 rounded-3xl border border-white/10"
+            className="w-full max-w-xl space-y-4 sm:space-y-6 bg-white/5 backdrop-blur-sm p-4 sm:p-6 rounded-3xl border border-white/10"
           >
             <div className="flex items-center justify-between px-2">
-              <h3 className="text-lg font-serif font-medium text-primary-foreground flex items-center gap-2">
-                <Heart className="w-4 h-4 fill-primary text-primary" /> Our Memories
+              <h3 className="text-lg font-serif font-medium text-white flex items-center gap-2" style={{ textShadow: "1px 1px 4px rgba(0,0,0,0.7)" }}>
+                <Heart className="w-4 h-4 fill-pink-300 text-pink-300" /> Our Memories
               </h3>
               <div className="flex items-center gap-2 bg-black/20 px-3 py-1.5 rounded-full">
                 <button onClick={toggleAudio} className="text-primary hover:text-primary-foreground transition-colors">
@@ -366,13 +684,13 @@ export default function PuzzleFlow() {
             <Carousel 
               opts={{ align: "start", loop: true }} 
               plugins={[
-                Autoplay({ delay: 3000, stopOnInteraction: false })
+                Autoplay({ delay: 6000, stopOnInteraction: false }) // ~6 seconds per image for 60 seconds total (10 images)
               ]}
               className="w-full"
             >
               <CarouselContent>
                 {sliderImages.map((img, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/2 pl-4">
+                  <CarouselItem key={index} className="basis-full sm:basis-1/2 md:basis-1/2 lg:basis-1/2 pl-2 sm:pl-4">
                     <div className="p-1">
                       <Card className="border-0 bg-transparent shadow-none">
                         <CardContent className="flex aspect-[3/4] items-center justify-center p-0 overflow-hidden rounded-xl relative group">
@@ -388,25 +706,18 @@ export default function PuzzleFlow() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="left-2 bg-black/50 border-none text-white hover:bg-primary" />
-              <CarouselNext className="right-2 bg-black/50 border-none text-white hover:bg-primary" />
+              <CarouselPrevious className="left-1 sm:left-2 bg-black/50 border-none text-white hover:bg-primary h-8 w-8 sm:h-10 sm:w-10" />
+              <CarouselNext className="right-1 sm:right-2 bg-black/50 border-none text-white hover:bg-primary h-8 w-8 sm:h-10 sm:w-10" />
             </Carousel>
             
-            <p className="text-xs text-muted-foreground font-mono uppercase tracking-widest">
-              ♫ Playing: Our Favorite Song (Preview)
+            <p className="text-xs text-white/80 font-mono uppercase tracking-widest" style={{ textShadow: "1px 1px 3px rgba(0,0,0,0.7)" }}>
+              ♫ Playing: Our Final Song (60 seconds)
             </p>
           </motion.div>
 
           {/* Bottom Actions */}
           <div className="flex flex-wrap justify-center gap-2">
-            <Badge 
-              variant="secondary" 
-              className="px-3 py-1.5 text-sm bg-secondary/50 backdrop-blur-sm border-secondary-foreground/10 cursor-pointer hover:bg-primary hover:text-white transition-colors"
-              onClick={triggerKissExplosion}
-            >
-              Send Virtual Kiss 💋
-            </Badge>
-            {["Real feelings 💗", "Next: real date? 🍽️"].map((tag, i) => (
+            {["Real feelings", "Next: real date?"].map((tag, i) => (
               <Badge key={i} variant="secondary" className="px-3 py-1.5 text-sm bg-secondary/50 backdrop-blur-sm border-secondary-foreground/10">
                 {tag}
               </Badge>
@@ -433,49 +744,29 @@ export default function PuzzleFlow() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col p-4 md:p-8 max-w-6xl mx-auto overflow-hidden relative">
-      {/* Audio Element for Main Game (Optional background ambient) */}
-      {/* <audio ref={audioRef} loop src="..." /> */}
-
-      {/* Kiss Overlay for Main Screen too */}
-      <AnimatePresence>
-        {kisses.map((kiss) => (
-          <motion.img
-            key={kiss.id}
-            src={kissMarkImg}
-            initial={{ opacity: 0, scale: 0, x: "-50%", y: "-50%" }}
-            animate={{ 
-              opacity: [0, 1, 1, 0], 
-              scale: [0.5, kiss.scale, kiss.scale * 1.1, kiss.scale * 1.2] 
-            }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 2, ease: "easeOut" }}
-            className="absolute pointer-events-none z-50 w-24 h-24 object-contain"
-            style={{ 
-              left: `${kiss.x}%`, 
-              top: `${kiss.y}%`, 
-              rotate: kiss.rotation 
-            }}
-          />
-        ))}
-      </AnimatePresence>
+    <div className="min-h-screen bg-background text-foreground flex flex-col p-3 sm:p-4 md:p-8 max-w-6xl mx-auto overflow-x-hidden relative">
+      {/* Background Audio Element - Plays throughout the game */}
+      <audio 
+        ref={backgroundAudioRef} 
+        src={backgroundSong}
+        loop
+        autoPlay
+      />
 
       {/* Header */}
-      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 md:mb-12">
-        <div>
-          <div className="flex items-center gap-2 text-primary font-medium text-xs tracking-widest uppercase mb-1">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            Play Her Heart • Online
-          </div>
-          <h1 className="text-2xl font-serif italic text-foreground/90 flex items-center gap-2">
-            <Music className="w-5 h-5" /> Little Love Puzzles
+      <header className="flex flex-col justify-center items-center gap-4 sm:gap-6 mb-6 sm:mb-8 md:mb-12 w-full px-2">
+        <div className="w-full flex justify-center">
+          <h1 
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-handwriting font-bold text-primary flex items-center gap-2 sm:gap-3 text-center px-2"
+            style={{ 
+              fontFamily: "'Dancing Script', 'Caveat', cursive"
+            }}
+          >
+            Vibhuti <span className="text-red-500">❤️</span> Ruchi
           </h1>
-          <p className="text-sm text-muted-foreground mt-1 max-w-md">
-            Every puzzle you solve unlocks a memory, a song, and one more piece of my heart.
-          </p>
         </div>
 
-        <div className="flex flex-col items-end gap-2 w-full md:w-auto">
+        <div className="flex flex-col items-center gap-2 w-full">
           <span className="text-xs font-medium text-muted-foreground">
             Puzzle {currentPuzzleIndex + 1} of {puzzles.length}
           </span>
@@ -496,7 +787,7 @@ export default function PuzzleFlow() {
       </header>
 
       {/* Main Content Grid */}
-      <div className="grid md:grid-cols-2 gap-6 md:gap-12 items-start flex-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-12 items-start flex-1 w-full">
         
         {/* Left Column: The Puzzle */}
         <motion.div
@@ -506,9 +797,9 @@ export default function PuzzleFlow() {
           exit={{ opacity: 0, x: 20 }}
           transition={{ duration: 0.5 }}
         >
-          <Card className="border-none shadow-xl shadow-primary/5 bg-white/80 dark:bg-card/50 backdrop-blur-sm overflow-hidden sticky top-8">
+          <Card className="border-none shadow-xl shadow-primary/5 bg-white/80 dark:bg-card/50 backdrop-blur-sm overflow-hidden md:sticky md:top-8">
             <div className="h-2 w-full bg-gradient-to-r from-primary/40 via-primary to-primary/40" />
-            <CardContent className="p-6 md:p-8 space-y-8">
+            <CardContent className="p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8">
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <Badge variant="secondary" className="font-mono text-xs tracking-wider uppercase">
@@ -517,8 +808,8 @@ export default function PuzzleFlow() {
                   <span className="text-xs text-muted-foreground font-mono">Lvl {currentPuzzle.level}</span>
                 </div>
                 
-                <h2 className="text-2xl md:text-3xl font-serif leading-tight text-foreground">
-                  “{currentPuzzle.question}”
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-serif leading-tight text-foreground">
+                  "{currentPuzzle.question}"
                 </h2>
                 
                 <div className="p-4 bg-secondary/30 rounded-lg border border-secondary">
@@ -545,7 +836,7 @@ export default function PuzzleFlow() {
                       onKeyDown={(e) => e.key === 'Enter' && !isUnlocked && handleUnlock()}
                       disabled={isUnlocked}
                       className={cn(
-                        "h-12 text-lg transition-all duration-300 border-2 focus-visible:ring-0 focus-visible:border-primary",
+                        "h-12 sm:h-14 text-base sm:text-lg transition-all duration-300 border-2 focus-visible:ring-0 focus-visible:border-primary",
                         status === 'error' ? "border-destructive bg-destructive/5 text-destructive" :
                         isUnlocked ? "border-green-500 bg-green-50 text-green-700 font-medium" : ""
                       )}
@@ -562,8 +853,8 @@ export default function PuzzleFlow() {
                   <Button 
                     size="lg" 
                     className={cn(
-                      "h-12 px-6 transition-all duration-300",
-                      isUnlocked ? "bg-green-500 hover:bg-green-600 w-12 px-0" : ""
+                      "h-12 sm:h-14 px-4 sm:px-6 transition-all duration-300 min-w-[80px]",
+                      isUnlocked ? "bg-green-500 hover:bg-green-600 w-12 sm:w-14 px-0" : ""
                     )}
                     onClick={handleUnlock}
                     disabled={isUnlocked || !input}
@@ -602,7 +893,7 @@ export default function PuzzleFlow() {
         </motion.div>
 
         {/* Right Column: The Memory */}
-        <div className="relative min-h-[400px]">
+        <div className="relative min-h-[300px] sm:min-h-[400px]">
           <AnimatePresence mode="wait">
             {!isUnlocked ? (
                <motion.div
@@ -620,89 +911,83 @@ export default function PuzzleFlow() {
                   <div className="space-y-2 max-w-sm">
                     <h3 className="font-serif text-xl font-medium text-foreground/80">Locked Memory</h3>
                     <p className="text-muted-foreground leading-relaxed">
-                      Solve the puzzle on the left, and I’ll show you a memory, a song, and a little piece of my heart that belongs only to you. 💫
+                      Solve the puzzle on the left, and I'll show you a memory, a song, and a little piece of my heart that belongs only to you. 💫
                     </p>
                   </div>
                 </Card>
               </motion.div>
             ) : (
               <motion.div
-                key={`unlocked-${currentPuzzleIndex}`}
-                initial={{ opacity: 0, y: 20, rotate: -2 }}
-                animate={{ opacity: 1, y: 0, rotate: 0 }}
-                transition={{ type: "spring", duration: 0.8 }}
-                className="relative"
+                key="unlocked-state"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.5 }}
+                className="absolute inset-0"
               >
-                <div className="absolute -inset-1 bg-gradient-to-br from-primary/20 to-transparent blur-xl -z-10 rounded-3xl" />
-                <Card className="border-none shadow-2xl shadow-primary/10 overflow-hidden bg-white/90 dark:bg-card/90 backdrop-blur-md">
-                  <div className="relative aspect-[4/3] overflow-hidden group cursor-pointer">
-                    <img 
-                      src={currentPuzzle.memory.image} 
-                      alt="Memory" 
-                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
-                       <p className="text-white font-medium flex items-center gap-2">
-                        <span className="w-8 h-[1px] bg-white/70" />
+                <Card className="h-full border-none shadow-xl bg-white/80 dark:bg-card/50 backdrop-blur-sm overflow-hidden">
+                  <div className="h-2 w-full bg-gradient-to-r from-green-500/40 via-green-500 to-green-500/40" />
+                  <CardContent className="p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 flex flex-col h-full">
+                    <div className="space-y-2">
+                      <Badge variant="secondary" className="text-xs">
+                        Unlocked
+                      </Badge>
+                      <h3 className="text-xl font-serif font-medium">{currentPuzzle.memory.title}</h3>
+                    </div>
+
+                    {/* Memory Image - Special handling for puzzle 2 with zoom */}
+                    <div className="relative overflow-hidden rounded-lg aspect-[3/4] bg-muted">
+                      {currentPuzzleIndex === 1 ? (
+                        // Puzzle 2: Zoomed in to show characters
+                        <img 
+                          src={currentPuzzle.memory.image} 
+                          alt={currentPuzzle.memory.caption}
+                          className="w-full h-full object-cover"
+                          style={{ 
+                            objectPosition: "center 30%",
+                            transform: "scale(1.2) sm:scale(1.3)"
+                          }}
+                        />
+                      ) : (
+                        <img 
+                          src={currentPuzzle.memory.image} 
+                          alt={currentPuzzle.memory.caption}
+                          className="w-full h-full object-cover"
+                        />
+                      )}
+                    </div>
+
+                    <div className="space-y-3 flex-1">
+                      <p className="text-sm text-muted-foreground leading-relaxed italic">
+                        "{currentPuzzle.memory.note}"
+                      </p>
+                      <p className="text-xs text-muted-foreground/80 font-medium">
                         {currentPuzzle.memory.caption}
-                       </p>
-                    </div>
-                  </div>
-
-                  <CardContent className="p-6 md:p-8 space-y-6">
-                    <div className="flex items-center gap-2 text-green-600 text-xs font-bold uppercase tracking-widest mb-2">
-                      <div className="w-2 h-2 rounded-full bg-green-500" />
-                      Unlocked with your answer
-                    </div>
-
-                    <div className="space-y-4">
-                      <h3 className="text-xs font-bold text-primary uppercase tracking-widest">{currentPuzzle.memory.title}</h3>
-                      <p className="font-serif text-xl md:text-2xl leading-relaxed text-foreground/90">
-                        {currentPuzzle.memory.note}
                       </p>
                     </div>
 
-                    <div className="pt-6 border-t border-border">
-                      <div className="bg-secondary/30 rounded-xl p-4 flex items-center gap-4 group hover:bg-secondary/50 transition-colors">
-                        <div 
-                          className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 cursor-pointer hover:scale-110 transition-transform"
-                          onClick={handleReplay}
-                        >
-                          {isPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 ml-1 fill-current" />}
-                        </div>
-                        <div className="flex-1 overflow-hidden">
-                          <div className="flex justify-between items-baseline mb-1">
-                            <h4 className="font-medium text-sm truncate">{currentPuzzle.memory.song}</h4>
-                            <span className="text-[10px] text-muted-foreground font-mono">2:45</span>
-                          </div>
-                          <div className="h-1 bg-primary/10 rounded-full overflow-hidden">
-                            <motion.div 
-                              className="h-full bg-primary"
-                              initial={{ width: "0%" }}
-                              animate={{ width: isPlaying ? "100%" : "30%" }}
-                              transition={{ duration: isPlaying ? 30 : 0, ease: "linear" }}
-                            />
-                          </div>
-                        </div>
+                    <div className="pt-4 border-t space-y-3">
+                      <div className="flex items-center gap-2 text-sm">
+                        <Music className="w-4 h-4 text-primary" />
+                        <h4 className="font-medium text-sm truncate">{currentPuzzle.memory.song}</h4>
                       </div>
                     </div>
 
-                    <div className="flex gap-3 pt-2">
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="flex-1 text-muted-foreground hover:text-foreground"
-                        onClick={handleReplay}
-                      >
-                        <RefreshCw className="w-4 h-4 mr-2" /> Replay song
-                      </Button>
-                      <Button 
-                        className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
-                        onClick={handleNext}
-                      >
-                        Next puzzle <ChevronRight className="w-4 h-4 ml-1" />
-                      </Button>
-                    </div>
+                    <Button
+                      onClick={handleNext}
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                      size="lg"
+                    >
+                      {currentPuzzleIndex < puzzles.length - 1 ? (
+                        <>
+                          Next Puzzle <ChevronRight className="w-4 h-4 ml-2" />
+                        </>
+                      ) : (
+                        <>
+                          See Final <Heart className="w-4 h-4 ml-2 fill-current" />
+                        </>
+                      )}
+                    </Button>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -710,19 +995,6 @@ export default function PuzzleFlow() {
           </AnimatePresence>
         </div>
       </div>
-
-      {/* Floating Action Button for Random Kisses during gameplay */}
-      {!showFinal && (
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={triggerKissExplosion}
-          className="fixed bottom-8 right-8 z-50 bg-white dark:bg-card shadow-2xl rounded-full p-4 text-primary border border-primary/20 hover:bg-primary hover:text-white transition-colors"
-        >
-          <Heart className="w-6 h-6 fill-current" />
-          <span className="sr-only">Send Kiss</span>
-        </motion.button>
-      )}
     </div>
   );
 }
