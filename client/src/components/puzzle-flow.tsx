@@ -38,11 +38,24 @@ import kissMarkImg from "@assets/generated_images/red_lipstick_kiss_mark_transpa
 import realMemory1Img from "@assets/IMG_5660_1765004494814.jpg";
 import realMemory3Img from "@assets/981d0463-28d5-4a97-b8d8-5791dc2e37fb_1765004494814.jpg";
 
+// Slider Images
+import slider1 from "@assets/1b81ce20-6a91-4c30-b367-3d211e56bc2c_1765005300157.JPG";
+import slider2 from "@assets/981d0463-28d5-4a97-b8d8-5791dc2e37fb_1765005300158.jpg";
+import slider3 from "@assets/IMG_1503_1765005300158.JPG";
+import slider4 from "@assets/IMG_1505_1765005300158.JPG";
+import slider5 from "@assets/IMG_1795_1765005300158.JPG";
+import slider6 from "@assets/IMG_4881_1765005300158.jpg";
+import slider7 from "@assets/IMG_5660_1765005300159.jpg";
+
 // Memory Slider Images
 const sliderImages = [
-  realMemory1Img,
-  realMemory3Img,
-  memory2Img,
+  slider1,
+  slider2,
+  slider3,
+  slider4,
+  slider5,
+  slider6,
+  slider7,
   finalHeartImg
 ];
 
