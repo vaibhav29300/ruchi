@@ -63,13 +63,21 @@ function useBaseLocation(): [string, (to: string, replace?: boolean) => void] {
 }
 
 function Router() {
-  // Use the custom location hook that handles base path
-  return (
-    <Switch hook={useBaseLocation as BaseLocationHook}>
-      <Route path="/" component={Home} />
-      <Route component={NotFound} />
-    </Switch>
-  );
+  // Since this is a single-page app, always render Home
+  // The custom location hook handles base path for any future routes
+  const [location] = useBaseLocation();
+  
+  // For now, always show Home since we only have one page
+  // This avoids routing issues on GitHub Pages
+  return <Home />;
+  
+  // Uncomment below if you add more routes later:
+  // return (
+  //   <Switch hook={useBaseLocation as BaseLocationHook}>
+  //     <Route path="/" component={Home} />
+  //     <Route component={NotFound} />
+  //   </Switch>
+  // );
 }
 
 function App() {
