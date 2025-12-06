@@ -962,12 +962,11 @@ export default function PuzzleFlow() {
                     </div>
 
                     {/* Memory Image - Make it fully visible */}
-                    <div className="relative w-full flex-shrink-0 rounded-lg bg-muted overflow-hidden" style={{ width: "100%", minHeight: "450px", height: "55vh", maxHeight: "650px" }}>
+                    <div className="relative w-full flex-shrink-0 rounded-lg bg-muted overflow-hidden" style={{ width: "100%", paddingBottom: "133.33%", position: "relative" }}>
                       <img 
                         src={currentPuzzle.memory.image} 
                         alt={currentPuzzle.memory.caption}
-                        className="w-full h-full object-cover"
-                        style={{ minWidth: "100%", minHeight: "100%" }}
+                        className="absolute inset-0 w-full h-full object-cover"
                       />
                     </div>
 
