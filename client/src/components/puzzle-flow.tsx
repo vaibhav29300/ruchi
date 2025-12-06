@@ -919,7 +919,7 @@ export default function PuzzleFlow() {
         </motion.div>
 
         {/* Right Column: The Memory */}
-        <div className="relative min-h-[300px] sm:min-h-[400px]">
+        <div className="relative min-h-[500px] sm:min-h-[600px]">
           <AnimatePresence mode="wait">
             {!isUnlocked ? (
                <motion.div
