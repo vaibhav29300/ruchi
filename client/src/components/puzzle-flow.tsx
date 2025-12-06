@@ -20,11 +20,13 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 // Import generated assets
-import memory1Img from "@assets/generated_images/romantic_couple_holding_hands_at_sunset.png";
 import memory2Img from "@assets/generated_images/plate_of_french_fries_diner_style.png";
-import memory3Img from "@assets/generated_images/abstract_soulmates_art.png";
 import finalHeartImg from "@assets/generated_images/glowing_heart_with_kiss_mark.png";
 import kissMarkImg from "@assets/generated_images/red_lipstick_kiss_mark_transparent_background.png";
+
+// Import user uploaded assets
+import realMemory1Img from "@assets/IMG_5660_1765004494814.jpg";
+import realMemory3Img from "@assets/981d0463-28d5-4a97-b8d8-5791dc2e37fb_1765004494814.jpg";
 
 type Puzzle = {
   id: number;
@@ -58,7 +60,7 @@ const puzzles: Puzzle[] = [
       title: "LOVE NOTE",
       note: "The day I met you, life secretly changed its favorite color to your smile. I didn't know it then, but every ordinary moment after that started to feel a little bit magical.",
       caption: "The start of \"us\". I still get butterflies.",
-      image: memory1Img,
+      image: realMemory1Img,
       song: "Our Beginning",
     },
   },
@@ -92,7 +94,7 @@ const puzzles: Puzzle[] = [
       title: "MORE THAN A WORD",
       note: "Because 'boyfriend and girlfriend' never felt like enough. You are my person, my peace, and my favorite place to be.",
       caption: "Two souls, one beautiful story.",
-      image: memory3Img,
+      image: realMemory3Img,
       song: "Forever",
     },
   },
